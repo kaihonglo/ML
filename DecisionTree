@@ -1,4 +1,10 @@
-#scikit train_test_split function
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import confusion_matrix
+%matplotlib inline
+
+scikit train_test_split function
 X_train, X_test, y_train, y_test = train_test_split(
  X, y, test_size = 0.20, random_state = 0
 )
@@ -18,3 +24,7 @@ y_predDT = classifierDT.predict(X_test)
 #Confusion Matrix
 cm_DT = confusion_matrix(y_test, y_predDT)
 cm_DT
+
+#Get accuracy of model
+accuracyDT = (cm_DT[0,0]+cm_DT[1,1])/(cm_DT[0,0]+cm_DT[0,1]+cm_DT[1,0]+cm_DT[1,1])
+print("Accuracy = " + str(accuracyDT))
