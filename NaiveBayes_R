@@ -1,0 +1,38 @@
+# Installing Packages
+install.packages("e1071")
+install.packages("caTools")
+install.packages("caret")
+
+# Loading package
+library(e1071)
+library(caTools)
+library(ggplot2)
+library(lattice)
+library(caret) 
+
+# Change column names
+colnames(data) <- c("label", "feature") 
+
+# Pseudorandomly shuffle data
+set.seed(42)
+rows <- sample(NROW(data))
+data <- data[rows,] 
+
+# Splitting data into train and test data
+split <- as.integer(NROW(data)* 0.75)
+training <- head(data, n = split)
+testing <- tail(data, n = (NROW(data) - split)) 
+
+# Fitting Naive Bayes Model to training data set
+classifier_cl <- naiveBayes(label ~ ., data = training) 
+
+# Predicting on test data
+y_pred <- predict(classifier_cl, newdata = testing) 
+
+# Confusion Matrix
+cm <- table(test_y, y_pred)
+cm 
+
+# Model Evaluation
+me <- confusionMatrix(y_pred, as.factor(testing$label))
+me 
